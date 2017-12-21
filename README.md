@@ -1,2 +1,2 @@
 # gDP_pgm
-LDG method to the \mu-Degasperis-Procesi equation
+A try to solve the d-p equa.
