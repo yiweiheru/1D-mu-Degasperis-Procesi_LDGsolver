@@ -1,4 +1,5 @@
 function [ Residue ] = residue( x,Nelm,Ord,uh,qh,~ )
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 elm_size = Ord+1;
 
