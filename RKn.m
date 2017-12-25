@@ -10,18 +10,15 @@ switch n_RK
 %         
 %         Unew =U1;
 %         
-%     case 2
-%         
-%         residue_1=getResidue(Ord,x,Nelm,U,massMat_inv,Time);
-%         Ut_1=Amat\residue_1;
-%         U1=U+dt*Ut_1;
-%         Time1=Time+dt;
-%         
-%         residue_2=getResidue(Ord,x,Nelm,U1,massMat_inv,Time1);
-%         Ut_2=Amat\residue_2;
-%         U2=U+1/2*U1+(dt/2)*Ut_2;
-% 
-%         Unew = U2;
+    case 2
+        
+        residue_1=getResidue( Ord,x,Nelm,U,Amat,Pvmat,massMat,massMat_inv,mu_massMat,Time );
+        Ut_1=massMat_inv*residue_1; U1=U+dt*Ut_1; Time1=Time+dt;
+        
+        residue_2=getResidue(Ord,x,Nelm,U1,Amat,Pvmat,massMat,massMat_inv,mu_massMat,Time1);
+        Ut_2=massMat_inv*residue_2; U2=U+1/2*U1+(dt/2)*Ut_2;
+
+        Unew = U2;
 %         
     case 3
    

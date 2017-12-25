@@ -3,6 +3,8 @@ function expr = basisDer_1d( ord,var )
 expr=zeros(ord+1,1);
 
 switch (ord)
+    case 0
+        expr(1) = 0;
     case 1 % For linear polynomial
         expr(1) = -1/2;
         expr(2) = 1/2;
