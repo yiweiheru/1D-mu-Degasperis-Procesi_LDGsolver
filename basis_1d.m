@@ -3,6 +3,8 @@ function expr = basis_1d( ord,var )
 expr=zeros(ord+1,1);
 
 switch (ord)
+    case 0 % constant
+        expr(1) = 1;
     case 1 % Linear polynomial 
         expr(1) = (1-var)/2;
         expr(2) = (1+var)/2;   

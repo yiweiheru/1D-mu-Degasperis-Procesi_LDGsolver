@@ -1,31 +1,33 @@
 clear
 close all
 
-Tfinal =10;
-figure_at_time=[0,1,3,5,10,20];
-ord_num = 3;
-ir_num = 5;
+Tfinal =2;
+figure_at_time=[0,0.1,0.5,1,1.5,2];
+% figure_at_time=[0,1,3,5,10,20];
+ord_num = 0;
+ir_num = 6;
 
 n_RK  = 3;
 period = 1;
-CS =1;	% indicator of the initial data
+CS =2;	% indicator of the initial data
 
 P0 = zeros(CS,1);
 Q0 = zeros(CS,1);
 S0 = zeros(CS,1);
 switch CS
+% Q-location of shocks; P-speed of transport; S-size of shock at Q
     case 1
         P0 = 0.333;    
-        Q0 = 0.1; 
+        Q0 = 0.1;  
         S0 = 0.1;
     case 2
-        P0 = [0.1; 0.08];
-        Q0 = [0.2; 0.1];
-        S0 = [0.4; 0.5];
+        P0 = [0.3; 0.1];
+        Q0 = [0.2; 0.5];
+        S0 = [0.4; 0.2];
     case 3
-        P0 = [0.1; 0.08; 0.12];
-        Q0 = [0.2; 0.1; 0.05];
-        S0 = [0.4; 0.5; 0.6];
+        P0 = [1; 0.8; 0.12];
+        Q0 = [0.1; 0.5; 0.8];
+        S0 = [0.7; 0.4; 0.2];
 end
 
 UStore = zeros((ord_num+1)*(10*2^(ir_num))+1,ir_num,ord_num);

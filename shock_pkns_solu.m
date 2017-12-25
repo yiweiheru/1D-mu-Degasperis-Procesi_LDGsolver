@@ -14,7 +14,7 @@ Lam = 3;
     % ODE solver with Euler method
     for it=1:Nt
         
-        if it == Nt-1
+        if it == Nt
             dt = dt_final;
         end
         
@@ -50,19 +50,22 @@ Lam = 3;
 	psi     = zeros(1,CS);
     for ne = 1:Nelm
         for i = 1:elm_size
-            xtemp = x(ne)+(x(ne+1)-x(ne))*(i-1)/(elm_size-1);
+            if elm_size == 1
+                xtemp = x(ne);
+            else
+                xtemp = x(ne)+(x(ne+1)-x(ne))*(i-1)/(elm_size-1);
+            end
             num = (ne-1)*elm_size+i;
-			
-			for k = 1:CS
+            for k = 1:CS
 				x_tilde(k) = xtemp - Q(k);
 				x_hat(k)   = x_tilde(k) - floor(x_tilde(k)/period)*period;
-				if x_hat(k) == 0 || x_hat(k) == period
+				if (x_hat(k) == 0 || x_hat(k) == period)
 					psi(k) = P(k)*(0.5*(x_hat(k)-1/2)^2 + 23/24);
 				else
 					psi(k) = P(k)*(0.5*(x_hat(k)-1/2)^2 + 23/24) + S(k)*(x_hat(k)-1/2);
-				end
-				Uexc(num) = sum(psi);
-			end 
+                end
+            end
+            Uexc(num) = sum(psi);
         end
     end
 end
