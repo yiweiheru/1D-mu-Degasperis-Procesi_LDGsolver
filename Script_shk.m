@@ -1,7 +1,11 @@
 clear
 close all
 
+<<<<<<< HEAD:Script_shk.m
 Tfinal =0.1;
+=======
+Tfinal =2;
+>>>>>>> 8f89755e1846c00daa3c6cc3d1ea57f7440f24d0:shock_pkn.m
 figure_at_time=[0,0.1,0.5,1,1.5,2];
 % figure_at_time=[0,1,3,5,10,20];
 ord_num = 0;
