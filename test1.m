@@ -1,14 +1,10 @@
 clear
 close all
 
-<<<<<<< HEAD
-Tfinal =0.1;
-=======
-Tfinal =20;
->>>>>>> 8f89755e1846c00daa3c6cc3d1ea57f7440f24d0
-figure_at_time=[0,1,2,3,4,5,20];
-ord_num = 0;
-ir_num = 4;
+Tfinal = 20;
+figure_at_time=[0,1,3,5,10,20];
+ord_num = 4;
+ir_num = 5;
 
 n_RK  = 3;
 period = 1;
@@ -53,50 +49,15 @@ U0 = setInitial_shock(Nelm,elm_size,x,CS,period,P0,Q0,S0); % shock peakons
 
 [ Amat,Pvmat,massMat,massMat_inv,mu_massMat ] = getAmat( Ord,Nelm,x );
 U = U0;
-<<<<<<< HEAD
-fig = fig + 1;
-mark = "exact"
-plot_uh( U,Ord,Nelm,x ,mark,fig)
-%Time = 0;
-%for nt = 1:Tsteps
-%    
-%    if Time == 0
-%        fig = fig+1;
-%        plot_uh( U,Ord,Nelm,x ,"exact",fig)
-%%        grid on
-%%        xlabel('x')
-%%        ylabel('u')
-%%        Title_str = strcat('t=',num2str(Time));
-%%        title(Title_str);
-%    end
-%    
-%    if nt == Tsteps-1
-%        dt = dt_final;
-%    end
-%    Time = Time+dt;
-%    for p=1:size(figure_at_time,2)
-%        if figure_at_time(p)-dt/2 < Time && Time <= figure_at_time(p)+dt/2
-%            fig = fig+1;
-%            [ Uexc,~,~ ] = shock_pkns_solu( P0,Q0,S0,Nelm,elm_size, x ,period,Time,CS );
-%            plot_uh( Uexc,Ord,Nelm,x ,"exact",fig)
-%%            grid on
-%%            xlabel('x')
-%%            ylabel('u')
-%%            Title_str = strcat('t=',num2str(Time));
-%%            title(Title_str);
-%        end
-%    end
-%end
-%
-=======
 
 Time = 0;
 for nt = 1:Tsteps
     
     if Time == 0
-        fig = fig+1;
+        [x_to_plot,uh_to_plot]=plot_uh( U,Ord,Nelm,x);
+        fig = fig+1
         figure(fig)
-        plot_uh( U,Ord,Nelm,x ,"exact")
+	      plot(x_to_plot,uh_to_plot,'-b')
         grid on
         xlabel('x')
         ylabel('u')
@@ -107,24 +68,24 @@ for nt = 1:Tsteps
     if nt == Tsteps-1
         dt = dt_final;
     end
-    Time = Time+dt;
+    time = Time+dt;
     for p=1:size(figure_at_time,2)
-        if figure_at_time(p)-dt/2 < Time && Time <= figure_at_time(p)+dt/2
-            fig = fig+1;
-            figure(fig)
-            [ Uexc,~,~ ] = shock_pkns_solu( P0,Q0,S0,Nelm,elm_size, x ,period,Time,CS );
-            plot_uh( Uexc,Ord,Nelm,x ,"exact")
-            grid on
-            xlabel('x')
-            ylabel('u')
-            Title_str = strcat('t=',num2str(Time));
-            title(Title_str);
+    	if figure_at_time(p)-dt/2 < Time && Time <= figure_at_time(p)+dt/2
+	   [x_to_plot,uh_to_plot]=plot_uh( U,Ord,Nelm,x);
+	   fig = fig+1
+	   figure(fig)
+	   plot(x_to_plot,uh_to_plot,'or')
+
+	   [ Uexc,~,~ ] = shock_pkns_solu( P0,Q0,S0,Nelm,elm_size, x ,period,Time,CS );
+	   [x_to_plot,uh_to_plot]=plot_uh( U,Ord,Nelm,x);
+	   fig = fig+1
+	   figure(fig)
+	   plot(x_to_plot,uh_to_plot,'-b')
+	   grid on
+	   xlabel('x')
+	   ylabel('u')
+	   Title_str = strcat('t=',num2str(Time));
+	   title(Title_str);
         end
     end
 end
-
->>>>>>> 8f89755e1846c00daa3c6cc3d1ea57f7440f24d0
-
-
-
-
