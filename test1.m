@@ -50,42 +50,14 @@ U0 = setInitial_shock(Nelm,elm_size,x,CS,period,P0,Q0,S0); % shock peakons
 [ Amat,Pvmat,massMat,massMat_inv,mu_massMat ] = getAmat( Ord,Nelm,x );
 U = U0;
 
-Time = 0;
-for nt = 1:Tsteps
-    
-    if Time == 0
-        [x_to_plot,uh_to_plot]=plot_uh( U,Ord,Nelm,x);
-        fig = fig+1
-        figure(fig)
-	      plot(x_to_plot,uh_to_plot,'-b')
-        grid on
-        xlabel('x')
-        ylabel('u')
-        Title_str = strcat('t=',num2str(Time));
-        title(Title_str);
-    end
-    
-    if nt == Tsteps-1
-        dt = dt_final;
-    end
-    time = Time+dt;
-    for p=1:size(figure_at_time,2)
-    	if figure_at_time(p)-dt/2 < Time && Time <= figure_at_time(p)+dt/2
-	   [x_to_plot,uh_to_plot]=plot_uh( U,Ord,Nelm,x);
-	   fig = fig+1
-	   figure(fig)
-	   plot(x_to_plot,uh_to_plot,'or')
 
-	   [ Uexc,~,~ ] = shock_pkns_solu( P0,Q0,S0,Nelm,elm_size, x ,period,Time,CS );
-	   [x_to_plot,uh_to_plot]=plot_uh( U,Ord,Nelm,x);
-	   fig = fig+1
-	   figure(fig)
-	   plot(x_to_plot,uh_to_plot,'-b')
-	   grid on
-	   xlabel('x')
-	   ylabel('u')
-	   Title_str = strcat('t=',num2str(Time));
-	   title(Title_str);
-        end
-    end
-end
+
+
+
+
+
+
+
+
+
+

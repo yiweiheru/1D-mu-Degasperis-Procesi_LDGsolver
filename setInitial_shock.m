@@ -18,6 +18,7 @@ for ne = 1:Nelm
         for k = 1:CS
             x_tilde(k) = xtemp - Q0(k);
             x_hat(k)   = x_tilde(k) - floor(x_tilde(k)/period)*period;
+            % descriptions: 
             % g(x)  = 1/2*(x-1/2)^2+23/24;
             % g'(x) = x-1/2, 0<x<1 | g''(x) = 1, 0<x<1
             %         0    , x=0   |          0, x=0

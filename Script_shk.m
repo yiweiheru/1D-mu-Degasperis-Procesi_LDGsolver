@@ -1,19 +1,16 @@
 clear
 close all
 
-<<<<<<< HEAD:Script_shk.m
-Tfinal =0.1;
-=======
 Tfinal =2;
->>>>>>> 8f89755e1846c00daa3c6cc3d1ea57f7440f24d0:shock_pkn.m
+
 figure_at_time=[0,0.1,0.5,1,1.5,2];
-% figure_at_time=[0,1,3,5,10,20];
-ord_num = 0;
-ir_num = 6;
+%  figure_at_time=[0,1,3,5,10,20];
+ord_num = 2;
+ir_num = 5;
 
 n_RK  = 3;
 period = 1;
-CS =2;	% indicator of the initial data
+CS =1;	% indicator of the initial data
 
 P0 = zeros(CS,1);
 Q0 = zeros(CS,1);
@@ -37,6 +34,7 @@ end
 UStore = zeros((ord_num+1)*(10*2^(ir_num))+1,ir_num,ord_num);
 UexcStore = zeros((ord_num+1)*(10*2^(ir_num))+1,ir_num,ord_num);
 
+
 fig = 0;
 for Ord = ord_num:ord_num
     for ir = ir_num:ir_num
@@ -51,6 +49,7 @@ for Ord = ord_num:ord_num
         Tsteps = floor((Tfinal-0.1*dt)/dt)+1;
         dt_final = Tfinal - (Tsteps-1) * dt;
         
+        TV = zeros(Tsteps);
         U0 = setInitial_shock(Nelm,elm_size,x,CS,period,P0,Q0,S0); % shock peakons
         
         [ Amat,Pvmat,massMat,massMat_inv,mu_massMat ] = getAmat( Ord,Nelm,x );
@@ -63,18 +62,24 @@ for Ord = ord_num:ord_num
                     fig = fig+1;
                     figure(fig)
                     plot_uh( U,Ord,Nelm,x ,"exact")
-%                    grid on
-%                    xlabel('x')
-%                    ylabel('u')
-%                    Title_str = strcat('t=',num2str(Time));
-%                    title(Title_str);
+                   grid on
+                   xlabel('x')
+                   ylabel('u')
+                   Title_str = strcat('t=',num2str(Time));
+                   title(Title_str);
+                   saveas(fig,"init.eps")
             end
             
             if nt == Tsteps-1
                 dt = dt_final;
             end
             
-            U = RKn( Ord,x,Nelm,U,Amat,Pvmat,massMat,massMat_inv,mu_massMat,n_RK,dt,Time );
+            if Ord == 0
+                U = RKn( Ord,x,Nelm,U,Amat,Pvmat,massMat,massMat_inv,mu_massMat,n_RK,dt,Time);
+            else
+                U = RKn_limiter( Ord,x,Nelm,U,Amat,Pvmat,massMat,massMat_inv,mu_massMat,n_RK,dt,Time,P0 );
+            end
+            TV(nt) = total_variation(U,Nelm,Ord,x);
             Time = Time+dt;
             
             for p=1:size(figure_at_time,2)
@@ -85,17 +90,27 @@ for Ord = ord_num:ord_num
                     hold on
                     [ Uexc,~,~ ] = shock_pkns_solu( P0,Q0,S0,Nelm,elm_size, x ,period,Time,CS );
                     plot_uh( Uexc,Ord,Nelm,x ,"exact")
-%                    grid on
-%                    xlabel('x')
-%                    ylabel('u')
-%                    Title_str = strcat('t=',num2str(Time));
-%                    title(Title_str);
-%                    legend('LDG','Exact')
+                   grid on
+                   xlabel('x')
+                   ylabel('u')
+                   Title_str = strcat('t=',num2str(Time));
+                   title(Title_str);
+                   legend('LDG','Exact')
+                   Tstr = strrep(num2str(Time),".","_");
+                   fig_name = strcat('sk_o',num2str(Ord),'i',num2str(ir),'t',Tstr,'.eps');
+                   saveas(fig,fig_name)
                 end
             end
         end
+%         fig=fig+1;
+%         figure(fig)
+%         xtime=linspace(0,Tfinal,Tsteps);
+%         plot(xtime,TV)
+%         fig_name = strcat('TV_ord',num2str(Ord),'.eps');
+%         saveas(fig,fig_name)
     end
 end
+
 
 
 

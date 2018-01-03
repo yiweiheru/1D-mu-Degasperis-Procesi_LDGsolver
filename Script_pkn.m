@@ -1,14 +1,14 @@
 clear
 close all
 
-Tfinal = 20;
+Tfinal = 3;
 figure_at_time=[0,1,3,5,10,20];
-ord_num = 4;
-ir_num = 5;
+ord_num = 3;
+ir_num = 4;
 
 n_RK  = 3;
 period = 1;
-CS = 1;	% indicator of the initial data
+CS = 3;	% indicator of the initial data
 
 P0 = zeros(CS,1);
 Q0 = zeros(CS,1);
