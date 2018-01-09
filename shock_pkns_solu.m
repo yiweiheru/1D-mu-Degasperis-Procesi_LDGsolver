@@ -9,7 +9,7 @@ Lam = 3;
     xi = zeros(CS,CS);
     G0 = zeros(CS,CS);
     G1 = zeros(CS,CS);
-	G2 = zeros(CS,CS);
+	G2 = ones(CS,CS); 
     
     % ODE solver with Euler method
     for it=1:Nt
@@ -27,10 +27,8 @@ Lam = 3;
                 % Generate the matrix B for g'
                 if xi(i,j) == 0 || xi(i,j) == period
                     G1(i,j) = 0;
-					G2(i,j) = 0;
                 else
                     G1(i,j) = (xi(i,j)-1/2); 
-					G2(i,j) = 1;
                 end
             end
         end

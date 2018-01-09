@@ -1,7 +1,9 @@
 function [Umod] = TVB_limiter( U,Ord,Nelm,x,P0 )
 % use the TVB limiter to remove the oscilation near the 
 % discontinuouity of u_h
-M=2/3 * max(abs(P0));
+
+% M=2/3 * max(abs(P0));
+M = 50;
 elm_size = Ord + 1;
 uh = uhTransform( Nelm,elm_size,U );
 

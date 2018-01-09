@@ -12,7 +12,7 @@ for np=1:size(x,2)
 end
    
 if mark == "numerical"
-    plot(x_to_plot,uh_to_plot,'^r')
+    plot(x_to_plot,uh_to_plot,'+r')
 elseif mark =="exact"
     plot(x_to_plot,uh_to_plot,'-b')
 end

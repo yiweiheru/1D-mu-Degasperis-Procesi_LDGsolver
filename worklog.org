@@ -1,0 +1,22 @@
+* Modify the shock-peakon solution of gDP 
+  <2018-01-10 Wed>
+** Simulate the shock-peakon solution of gDP successfully!!!
+   <2018-01-10 Wed 02:40>
+   It is result my mistake of taking wrong exact solution cause of the wrong understanding to g''(x). 
+   It should be taken to 1 instead of 0 on the peakon points in the whole domain [0,1).
+** TODO Search for the smooth exact solution for gDP to compute the accuracy list.
+   SCHEDULED: <2018-01-10 Wed 03:00>
+** Read the article [On the Cauchy problem for a weakly dissipative muDP equation]
+*** TODO Figure out the blow up phenomena for gDP equation.
+** discution with Xu.
+** Profile time
+*** one-shock-solu: "298s" (In laboratory 1214)
+    polynomial: 1
+    Meshsize: 160 
+    RK_order: 3 
+    CFL: 0.1
+*** one-shock-solu: "533s" (In laboratory 1214)
+    polynomial: 2
+    Meshsize: 160 
+    RK_order: 3 
+    CFL: 0.1

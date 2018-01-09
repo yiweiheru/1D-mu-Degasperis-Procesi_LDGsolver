@@ -1,4 +1,7 @@
 simulations/
 *#
+.#*
 *~
-
+*.eps
+*.fig
+*.swp
