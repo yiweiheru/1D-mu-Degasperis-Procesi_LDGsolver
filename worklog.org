@@ -10,13 +10,27 @@
 *** TODO Figure out the blow up phenomena for gDP equation.
 ** discution with Xu.
 ** Profile time
-*** one-shock-solu: "298s" (In laboratory 1214)
+   <2018-01-10 Wed 15:00>
+*** one-shock-solu: "298s" (In lab 1214)
     polynomial: 1
     Meshsize: 160 
     RK_order: 3 
     CFL: 0.1
-*** one-shock-solu: "533s" (In laboratory 1214)
+*** one-shock-solu: "533s" (In lab 1214)
     polynomial: 2
     Meshsize: 160 
+    shocks: 1
     RK_order: 3 
     CFL: 0.1
+*** three-shock-solu: "230s" (In lab 1214)
+    Order_of_polynomial: 1 
+    Meshsize: 160 
+    shocks: 3
+    RK_order: 3 
+    CFL: 0.1
+*** simulate the exact solution: "2666s" (In domi 216)
+	Initial condition: 0.03*sin(2*pi*x)+0.5
+    Order_of_polynomial: 3
+    Meshsize: 640 
+    RK_order: 3 
+    CFL: 0.1 

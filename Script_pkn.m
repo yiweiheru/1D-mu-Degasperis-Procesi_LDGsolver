@@ -1,7 +1,7 @@
 clear
 close all
 
-Tfinal = 3;
+Tfinal =1;
 figure_at_time=[0,1,3,5,10,20];
 ord_num = 3;
 ir_num = 4;

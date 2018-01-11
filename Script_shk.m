@@ -28,7 +28,7 @@ switch CS
         Q0 = [0.2; 0.5];
         S0 = [0.4; 0.2];
     case 3
-        P0 = [1; 0.8; 0.12];
+        P0 = [1  ; 0.8; 0.12];
         Q0 = [0.1; 0.5; 0.8];
         S0 = [0.7; 0.4; 0.2];
 end
@@ -38,27 +38,28 @@ UexcStore = zeros((ord_num+1)*(10*2^(ir_num))+1,ir_num,ord_num);
 
 fig = 0;
 for Ord = ord_num:ord_num
-    for ir = ir_num:ir_num
-        
-        Time = 0;        
-        Nelm = 10*2^(ir-1);
-        dx = period/Nelm;
-        x = 0:dx:period;
+  for ir = ir_num:ir_num
+
         elm_size = Ord+1;
-        
+
+        Nelm = 10*2^(ir-1);
+        dx   = period/Nelm;
+        x    = 0:dx:period;
+
+        Time = 0;
         dt = cfl * dx;
         Tsteps = floor((Tfinal-0.1*dt)/dt)+1;
         dt_final = Tfinal - (Tsteps-1) * dt;
-        
+
         TV = zeros(Tsteps);
-        U0 = setInitial_shock(Nelm,elm_size,x,CS,period,P0,Q0,S0);
-        
+        U0 = setInitial_shk(Nelm,elm_size,x,CS,period);
+
         [ Amat,Pvmat,massMat,massMat_inv,mu_massMat ] = getAmat(Ord,Nelm,x);
         U = U0;
-        
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        fig = fig+1;
+
+        fig = fig + 1;
         figure(fig)
         plot_uh( U,Ord,Nelm,x ,"exact")
         grid on
@@ -67,24 +68,23 @@ for Ord = ord_num:ord_num
         Title_str = strcat('t=',num2str(Time));
         title(Title_str);
         fig_name = strcat('sk',num2str(CS),'_init');
-        saveas(fig,['./simulations/eps/',fig_name],'eps')
-        saveas(fig,['./simulations/fig/',fig_name],'fig')
-        
+        saveas(fig,['./smooth/eps/',fig_name],'eps')
+        saveas(fig,['./smooth/fig/',fig_name],'fig')
+
         for nt = 1:Tsteps
-            
+
             if nt == Tsteps-1
                 dt = dt_final;
             end
-            
+
             if Ord == 0
                 U = RKn( Ord,x,Nelm,U,Amat,Pvmat,massMat,massMat_inv,mu_massMat,n_RK,dt,Time);
             else
                 U = RKn_limiter( Ord,x,Nelm,U,Amat,Pvmat,massMat,massMat_inv,mu_massMat,n_RK,dt,Time,P0 );
             end
-            
-%             TV(nt) = total_variation(U,Nelm,Ord,x);
+
             Time = Time+dt;
-            
+
             for p=1:size(figure_at_time,2)
                 if figure_at_time(p)-dt/2 < Time && Time <= figure_at_time(p)+dt/2
                     fig = fig+1;
@@ -101,9 +101,9 @@ for Ord = ord_num:ord_num
                     %                    legend('LDG','Exact')
                     Tstr = strrep(num2str(Time),".","_");
                     fig_name = strcat('sk',num2str(CS),'_o',num2str(Ord),'i',num2str(ir),'t',Tstr);
-                    saveas(fig,['./simulations/eps/',fig_name],'eps')
-                    saveas(fig,['./simulations/fig/',fig_name],'fig')
-                    
+                    saveas(fig,['./smooth/eps/',fig_name],'eps')
+                    saveas(fig,['./smooth/fig/',fig_name],'fig')
+
                 end
             end
         end
@@ -111,9 +111,3 @@ for Ord = ord_num:ord_num
 end
 fprintf('Infos:\nOrder_of_polynomial: %s \nMeshsize: %s \nshocks: %s \nRK_order: %s \nCFL: %s\n',...
     num2str(ord_num),num2str(10*2^(ir_num-1)),num2str(CS),num2str(n_RK),num2str(cfl))
-
-
-
-
-
-
