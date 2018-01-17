@@ -8,7 +8,7 @@ for ne = 1:Nelm
         xtemp = x(ne)+(x(ne+1)-x(ne))*(i-1)/(elm_size-1);
         num = (ne-1)*elm_size+i;
         % initial condition settings
-        U0(num) = 0.3*sin(2*pi*xtemp);
+        U0(num) = 0.03*sin(2*pi*xtemp)+0.5;
 
         
 

@@ -5,8 +5,8 @@ Ord_e = 3;
 ir_e     = 6;
 cfl     = 0.1;
 n_RK    = 3;
-period  = 2*pi;
-Tfinal=0.2;
+period  = 1;
+Tfinal=0.5;
 
 Time = 0;
 Nelm = 10*2^(ir_e-1);
