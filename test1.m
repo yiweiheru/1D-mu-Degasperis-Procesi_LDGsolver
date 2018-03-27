@@ -1,63 +1,39 @@
-clear
-close all
+% test the condition number of the matrix
 
-Tfinal = 20;
-figure_at_time=[0,1,3,5,10,20];
-ord_num = 4;
-ir_num = 5;
+% flux_f \in [Dsp,Csv]; flux_q,flux_v \in [C,R,L]
+global flux_f flux_q flux_v
+flux_f = 'Csv';
+flux_q = 'C';
+flux_v = 'C';
 
-n_RK  = 3;
-period = 1;
-CS =2;	% indicator of the initial data
+warning off
 
-P0 = zeros(CS,1);
-Q0 = zeros(CS,1);
-S0 = zeros(CS,1);
-switch CS
-    case 1
-        P0 = 0.333;    
-        Q0 = 0.1;  
-        S0 = 0.1;
-    case 2
-        P0 = [0.3; 0.1];
-        Q0 = [0.2; 0.5];
-        S0 = [0.4; 0.2];
-    case 3
-        P0 = [1; 0.8; 0.12];
-        Q0 = [0.1; 0.5; 0.8];
-        S0 = [0.7; 0.4; 0.2];
-end
-
-UStore = zeros((ord_num+1)*(10*2^(ir_num))+1,ir_num,ord_num);
-UexcStore = zeros((ord_num+1)*(10*2^(ir_num))+1,ir_num,ord_num);
-
-fig = 0;
-Ord = ord_num;
-ir = ir_num;
-
-Nelm = 10*2^(ir-1);
-dx = period/Nelm;
-x = 0:dx:period;
+Ord = 0;
 elm_size = Ord+1;
 
-cfl = 0.1;
-dt = cfl * dx;
-Tsteps = floor((Tfinal-0.1*dt)/dt)+1;
-dt_final = Tfinal - (Tsteps-1) * dt;
+ir  = 4;
+Nelm = 10*2^(ir-1)+1;
 
-U0 = setInitial_shock(Nelm,elm_size,x,CS,period,P0,Q0,S0); % shock peakons
+period  = 1;
+dx = period/Nelm;
+x  = 0:dx:period;
 
-[ Amat,Pvmat,massMat,massMat_inv,mu_massMat ] = getAmat( Ord,Nelm,x );
-U = U0;
+[ Amat,Pvmat,Pqmat,massMat,massMat_inv,mu_massMat ] = getAmat(Ord,Nelm,x);
+
+Amat = full(Amat);
+Pvmat = full(Pvmat);
+Pqmat = full(Pqmat);
+massMat = full(massMat);
+massMat_inv = full(massMat_inv);
+mu_massMat = full(mu_massMat);
+
+format compact
+
+% fprintf("rank of Pqmat*massMat_inv*Pvmat is %i \n", rank(mu_massMat-Amat));
+fprintf("rank of Amat is %i \n", rank(Amat));
+fprintf("size of Amat is %i \n", size(Amat,1));
+
+fprintf("condition number of Amat is %e \n",  condest(Amat));
 
 
-
-
-
-
-
-
-
-
-
-
+% when ord is even & Nelm is odd the condest(Amat) is good.

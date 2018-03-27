@@ -1,4 +1,4 @@
-function [ Mmat,Pmat,mu_Mmat,FQmat,FVmat,M_inv ] = Mat_sys( Ord,x,Nelm )
+function [ Mmat,Pmat,mu_Mmat,Fmat,M_inv ] = Mat_sys( Ord,x,Nelm )
 %    In this projection of DP equation, we choose a simple way
 %    to handle the mass matrix via using uniform mesh.
 
@@ -55,43 +55,22 @@ for neI=1:Nelm
         end
     end
 end
-% %imply the periodic boundary condition to get the neighbourhood.
-% nei=zeros(Nelm,2);
-% for ne=1:Nelm
-%     if ne==1
-%         nei(ne,1)=  Nelm;
-%         nei(ne,2)=2;
-%     elseif ne==Nelm
-%         nei(ne,1)=Nelm-1;
-%         nei(ne,2)=1;
-%     else
-%         nei(ne,1)=ne-1;
-%         nei(ne,2)=ne+1;
-%     end
-% end
 
-% Matrix fomulated by the numerical flux, they are different from the
-% choice of the flux
-
+% uf(:,1) is the basis function on the left  surface of the cell.
+% uf(:,2) is the basis function on the right surface of the cell.
 uf=zeros(elm_size,2);
 uf(:,1)=basis_1d(Ord,-1);
 uf(:,2)=basis_1d(Ord,1);
 
-FQmat = zeros( elm_size,elm_size,2,2,Nelm );   % uh takes plus
-FVmat = zeros( elm_size,elm_size,2,2,Nelm );   % rh takes minus
+Fmat = zeros( elm_size,elm_size,2,2,Nelm );
 
 for ne = 1:Nelm
     for j = 1:elm_size
         for i = 1:elm_size
-            FQmat(i,j,1,1,ne) = uf(i,1)*uf(j,1);
-            FQmat(i,j,1,2,ne) = uf(i,1)*uf(j,2);
-            FQmat(i,j,2,1,ne) = uf(i,2)*uf(j,1);
-            FQmat(i,j,2,2,ne) = uf(i,2)*uf(j,2);
-            
-            FVmat(i,j,1,1,ne) = uf(i,1)*uf(j,1);
-            FVmat(i,j,1,2,ne) = uf(i,1)*uf(j,2);
-            FVmat(i,j,2,1,ne) = uf(i,2)*uf(j,1);
-            FVmat(i,j,2,2,ne) = uf(i,2)*uf(j,2);
+            Fmat(i,j,1,1,ne) = uf(i,1)*uf(j,1);
+            Fmat(i,j,1,2,ne) = uf(i,1)*uf(j,2);
+            Fmat(i,j,2,1,ne) = uf(i,2)*uf(j,1);
+            Fmat(i,j,2,2,ne) = uf(i,2)*uf(j,2);  
         end
     end
 end

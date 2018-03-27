@@ -1,4 +1,4 @@
-function [Umod] = TVB_limiter( U,Ord,Nelm,x,P0 )
+function [Umod] = TVB_limiter( U,Ord,Nelm,x )
 % use the TVB limiter to remove the oscilation near the 
 % discontinuouity of u_h
 

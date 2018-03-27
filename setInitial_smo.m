@@ -4,11 +4,14 @@ U0 = zeros(Nelm*elm_size,1);
 
 for ne = 1:Nelm
     for i = 1:elm_size
-
-        xtemp = x(ne)+(x(ne+1)-x(ne))*(i-1)/(elm_size-1);
+        if elm_size >= 2
+            xtemp = x(ne)+(x(ne+1)-x(ne))*(i-1)/(elm_size-1);
+        else
+            xtemp = x(ne);
+        end
         num = (ne-1)*elm_size+i;
         % initial condition settings
-        U0(num) = 0.03*sin(2*pi*xtemp)+0.5;
+        U0(num) = 0.1*sin(2*pi*xtemp)+0.5;
 
         
 

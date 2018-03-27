@@ -12,9 +12,11 @@ for np=1:size(x,2)
 end
    
 if mark == "numerical"
-    plot(x_to_plot,uh_to_plot,'+r')
-elseif mark =="exact"
-    plot(x_to_plot,uh_to_plot,'-b')
+    plot(x_to_plot,uh_to_plot,'^r','LineWidth',1)
+elseif mark == "exact"
+    plot(x_to_plot,uh_to_plot,'-b','LineWidth',1.5)
+elseif mark == "other"
+    plot(x_to_plot,uh_to_plot,'xc','LineWidth',1)
 end
 
 

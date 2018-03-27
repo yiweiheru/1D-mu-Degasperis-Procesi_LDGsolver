@@ -1,4 +1,4 @@
-function [ U0 ]  =  setInitial_multi(Nelm,elm_size,x,CS,period,P0,Q0)
+function [ U0 ]  =  setInitial_peak(Nelm,elm_size,x,CS,period,P0,Q0)
 % CS is the indicator of the type of initial data U0
 
 
@@ -14,11 +14,14 @@ for ne = 1:Nelm
             case 1
                 q1 = Q0(1);p1 = P0(1);
                 
-                x_tilde = xtemp - q1 + (-period/2);
-                x_hat = (x_tilde-(-period/2))-floor((x_tilde-(-period/2))/period)*period+(-period/2);
+                x_tilde = xtemp - q1 ;
+                x_hat   = x_tilde - floor(x_tilde/period) * period ;
+                psi     = p1 * (0.5 *  ( x_hat-1/2 )^2 + 23/24);
+                U0(num) = psi;
+%                 x_hat = (x_tilde-(-period/2))-floor((x_tilde-(-period/2))/period)*period+(-period/2);
                 
 %                 U0(num) = sin(x_hat);
-                U0(num) = p1/26*(12*x_hat^2+23);
+%                 U0(num) = p1/26*(12*x_hat^2+23);
 %                 % scaling!
 %                 argu_nv =p1*period/(1+1/12*period^3);
 %                 argu_m = p1-period^2/8*argu_nv;

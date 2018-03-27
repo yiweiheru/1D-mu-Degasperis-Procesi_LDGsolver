@@ -30,15 +30,30 @@ switch (ord)
         expr(4) = 25*(5*var+3)*(5*var+1)*(var+1)*(5*var-3)*(var-1)/384;
         expr(5) = -25*(5*var+3)*(5*var+1)*(var+1)*(5*var-1)*(var-1)/768;
         expr(6) = (5*var+3)*(5*var+1)*(var+1)*(5*var-1)*(5*var-3)/768;
-end % Switch on order
+end
+
+%Switch on order
 % switch (ord)
+%     case 0 
+%         expr(1) = 1;
 %     case 1 % Linear polynomial 
 %         expr(1) = 1;
 %         expr(2) = var/2;   
 %     case 2 % Quadratic polynomial    
-%         expr(1) =1;
+%         expr(1) = 1;
 %         expr(2) = var/2;
-%         expr(3) = (var/2)^2;        
+%         expr(3) = (var/2)^2;    
+%     case 3
+%         expr(1) = 1;
+%         expr(2) = var/2;
+%         expr(3) = (var/2)^2;  
+%         expr(4) = (var/2)^3;
+%     case 4
+%         expr(1) = 1;
+%         expr(2) = var/2;
+%         expr(3) = (var/2)^2;  
+%         expr(4) = (var/2)^3;
+%         expr(4) = (var/2)^4;
 % end % Switch on order
 
 return

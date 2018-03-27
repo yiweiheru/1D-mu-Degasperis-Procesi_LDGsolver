@@ -1,5 +1,6 @@
-function [ Residue ] = residue( x,Nelm,Ord,uh,qh,~ )
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [ Residue ] = residue( x,Nelm,Ord,uh,qh,Time,flux_f )
+
+% type of flux of f(u)=1/2*u^2;
 
 elm_size = Ord+1;
 
@@ -80,9 +81,13 @@ for ne=1:Nelm
     uRm = uh(ne,:)*uf(:,2);
     
     
-    fhat_L = 0.5*(0.5*uLp^2 + 0.5*uLm^2 - uh_max*(uLp - uLm));
-    fhat_R = 0.5*(0.5*uRp^2 + 0.5*uRm^2 - uh_max*(uRp - uRm));
-    
+    if flux_f == 'Csv'
+        fhat_L = 0.5*1/3*( uLp^2 + uLp*uLm + uLm^2 );
+        fhat_R = 0.5*1/3*( uRp^2 + uRp*uRm + uRm^2 );      
+    elseif flux_f == 'Dsp'
+        fhat_L = 0.5*(0.5*uLp^2 + 0.5*uLm^2 - uh_max*(uLp - uLm));
+        fhat_R = 0.5*(0.5*uRp^2 + 0.5*uRm^2 - uh_max*(uRp - uRm));        
+    end
     
     for i=1:elm_size
         num=(ne-1)*elm_size+i;
