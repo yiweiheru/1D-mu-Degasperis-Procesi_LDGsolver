@@ -13,19 +13,19 @@ period  = 1;
 
 % flux_f \in [Dsp,Csv]; flux_q,flux_v \in [C,R,L]
 % indicator of the initial data
-peak_type = 3;
+peak_type = 2;
 
 P0 = zeros(peak_type,1);
 Q0 = zeros(peak_type,1);
 switch peak_type
     case 1
-        P0(1) = 0.333;        Q0(1) = -0.5;
+        P0(1) = 0.333;    Q0(1) = -0.5;
     case 2
-        P0(1) = 0.1;      Q0(1) = 0.2;
+        P0(1) = 0.1;      Q0(1) = 0.4;
         P0(2) = 0.08;     Q0(2) = 0.1;
     case 3
-        P0(1) = 0.1;      Q0(1) = 0.2;
-        P0(2) = 0.08;     Q0(2) = 0.1;
+        P0(1) = 0.1;      Q0(1) = 0.5;
+        P0(2) = 0.08;     Q0(2) = 0.2;
         P0(3) = 0.12;     Q0(3) = 0.05;
 end
 
