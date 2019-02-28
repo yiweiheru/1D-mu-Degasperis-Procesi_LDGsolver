@@ -25,14 +25,14 @@ dt_final = Tfinal - (Tsteps-1) * dt;
 U0 = setInitial(Nelm_e,elm_size_e,x_e,Xexc,uexc);
 U  = U0;
 plot_uh( U0,Ord_e,Nelm_e,x_e ,"exact")
-[ Amat,Pvmat,Pqmat,massMat,massMat_inv,mu_massMat ] = getAmat(Ord_e,Nelm_e,x_e);
+[ Amat,Pvmat,Pqmat,massMat,massMat_inv,mu_massMat ] = getAmat(Ord_e,Nelm_e,x_e,'R','L');
 
 for nt = 1:Tsteps
     if nt == Tsteps
         dt = dt_final;
     end
     
-    U = RKn( Ord_e,x_e,Nelm_e,U,Amat,Pvmat,Pqmat,massMat,massMat_inv,mu_massMat,n_RK,dt,Time);
+    U = RKn( Ord_e,x_e,Nelm_e,U,Amat,Pvmat,Pqmat,massMat,massMat_inv,mu_massMat,n_RK,dt,Time,'Dsp');
     Time = Time+dt;
 end
 

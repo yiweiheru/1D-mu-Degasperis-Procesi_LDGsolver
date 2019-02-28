@@ -8,17 +8,17 @@ flux_v = 'C';
 
 warning off
 
-Ord = 0;
+Ord = 1;
 elm_size = Ord+1;
 
-ir  = 4;
+ir  = 3;
 Nelm = 10*2^(ir-1)+1;
 
 period  = 1;
 dx = period/Nelm;
 x  = 0:dx:period;
 
-[ Amat,Pvmat,Pqmat,massMat,massMat_inv,mu_massMat ] = getAmat(Ord,Nelm,x);
+[ Amat,Pvmat,Pqmat,massMat,massMat_inv,mu_massMat ] = getAmat(Ord,Nelm,x,'L','R');
 
 Amat = full(Amat);
 Pvmat = full(Pvmat);
@@ -29,11 +29,10 @@ mu_massMat = full(mu_massMat);
 
 format compact
 
-% fprintf("rank of Pqmat*massMat_inv*Pvmat is %i \n", rank(mu_massMat-Amat));
 fprintf("rank of Amat is %i \n", rank(Amat));
 fprintf("size of Amat is %i \n", size(Amat,1));
 
 fprintf("condition number of Amat is %e \n",  condest(Amat));
-
+fprintf("condition number of Amat is %e \n",  condest(Amat));
 
 % when ord is even & Nelm is odd the condest(Amat) is good.
