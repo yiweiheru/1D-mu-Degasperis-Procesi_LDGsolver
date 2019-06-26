@@ -1,2 +1,2 @@
 # gDP_pgm
-A try to solve the d-p equa.
+A try to use the LDG method to solve the $\mu$-DP equation.
